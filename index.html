@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Valentine 💖</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <style>
+      body {
+        margin: 0;
+        height: 100vh;
+        background:
+          linear-gradient(rgba(255, 154, 158, 0.6), rgba(250, 208, 196, 0.6)),
+          url("background.jpg");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: "Segoe UI", sans-serif;
+        overflow: hidden;
+      }
+
+      .wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .card {
+        background: rgba(255, 255, 255, 0.25);
+        backdrop-filter: blur(12px);
+        padding: 60px;
+        border-radius: 30px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+        text-align: center;
+        max-width: 600px;
+      }
+
+      h2 {
+        margin: 0;
+        color: #ff4d6d;
+        font-size: 1.5rem;
+      }
+
+      h1 {
+        font-size: 3rem;
+        color: rgb(241, 41, 74);
+        margin: 10px 0 40px;
+      }
+
+      .buttons {
+        display: flex;
+        gap: 25px;
+        justify-content: center;
+      }
+
+      button {
+        padding: 15px 45px;
+        font-size: 1.2rem;
+        border: none;
+        border-radius: 30px;
+        cursor: pointer;
+      }
+
+      #yesBtn,
+      #noBtn {
+        background: white;
+        color: #ff4d6d;
+      }
+
+      .celebration {
+        display: none;
+        margin-top: 30px;
+      }
+
+      .emoji-card {
+        background: #fff7f9;
+        border-radius: 25px;
+        padding: 25px;
+      }
+
+      .emoji-title {
+        font-size: 1.6rem;
+        font-weight: bold;
+        color: #ff4d6d;
+        margin-bottom: 15px;
+      }
+
+      .emoji-text {
+        font-size: 1.3rem;
+      }
+
+      .emoji-text1 {
+        font-size: 1.1rem;
+      }
+
+      .love-sticker {
+        width: 250px;
+        margin: 20px auto;
+        display: block;
+      }
+
+      .hint {
+        margin-top: 40px;
+        font-size: 1rem;
+      }
+
+      .heart {
+        position: absolute;
+        width: 18px;
+        height: 18px;
+        background: red;
+        transform: rotate(45deg);
+        animation: float 8s linear infinite;
+      }
+
+      .heart::before,
+      .heart::after {
+        content: "";
+        width: 18px;
+        height: 18px;
+        background: red;
+        border-radius: 50%;
+        position: absolute;
+      }
+
+      .heart::before {
+        top: -9px;
+      }
+
+      .heart::after {
+        left: -9px;
+      }
+
+      @keyframes float {
+        from {
+          transform: translateY(100vh) rotate(45deg);
+        }
+        to {
+          transform: translateY(-120vh) rotate(45deg);
+        }
+      }
+
+      @media (max-width: 768px) {
+        .card {
+          padding: 35px 25px;
+          width: 95%;
+        }
+
+        h1 {
+          font-size: 2.1rem;
+        }
+
+        .buttons {
+          flex-direction: column;
+        }
+
+        button {
+          width: 100%;
+        }
+
+        .love-sticker {
+          width: 200px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- 🔊 BACKGROUND MUSIC -->
+    <audio id="bgMusic" loop>
+      <source src="music.mp3" type="audio/mpeg" />
+    </audio>
+
+    <div class="wrapper">
+      <div class="card">
+        <h2>Hi Pillu 💕</h2>
+        <h1>Will you be my Valentine?</h1>
+
+        <div class="buttons">
+          <button id="yesBtn">Yes 💖</button>
+          <button id="noBtn">No 🙈</button>
+        </div>
+
+        <div class="celebration" id="celebration">
+          <div class="emoji-card">
+            <p class="emoji-text">
+              I knew you would say yes! 💕
+              <img src="love.png" class="love-sticker" />
+            </p>
+
+            <div class="emoji-title">GOOD CHOICE! 💖</div>
+            <p class="emoji-text1">
+              You have made me the happiest person in the world<br />
+              Can't wait to celebrate this special day with you 🌹
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="hint" id="hint">💡 Hint: It's too late to say Noo! 🙈</div>
+    </div>
+
+    <script>
+      const noBtn = document.getElementById("noBtn");
+      const yesBtn = document.getElementById("yesBtn");
+      const celebration = document.getElementById("celebration");
+      const hint = document.getElementById("hint");
+      const bgMusic = document.getElementById("bgMusic");
+
+      const isMobile = window.innerWidth <= 768;
+
+      const dodge = () => {
+        const range = isMobile ? 60 : 120;
+        noBtn.style.transform = `translate(${Math.random() * range - range / 2}px,
+          ${Math.random() * range - range / 2}px)`;
+      };
+
+      isMobile
+        ? noBtn.addEventListener("click", dodge)
+        : noBtn.addEventListener("mouseover", dodge);
+
+      yesBtn.addEventListener("click", () => {
+        document.querySelector(".buttons").style.display = "none";
+        celebration.style.display = "block";
+        hint.style.display = "none";
+
+        // 🎶 PLAY MUSIC
+        bgMusic.volume = 0.6;
+        bgMusic.play();
+      });
+
+      function createHeart() {
+        const heart = document.createElement("div");
+        heart.classList.add("heart");
+        heart.style.left = Math.random() * 100 + "vw";
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 10000);
+      }
+
+      setInterval(createHeart, 300);
+    </script>
+  </body>
+</html>
